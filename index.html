@@ -1,22 +1,532 @@
 <!doctype html>
-<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Vale de Sueños · Gimena</title>
+
 <style>
-body{margin:0;background:linear-gradient(135deg,#fffaf5,#f8e1e4);font-family:Georgia,serif;color:#4a2932}.wrap{max-width:760px;margin:auto;padding:22px}.card{background:#fffaf5ee;border:1px solid #d8b36a;border-radius:24px;padding:28px;box-shadow:0 15px 45px #7b405222;text-align:center}h1{font-size:38px;color:#b8862d;margin:4px 0}h2{color:#a63d58}.name{font-size:25px;font-style:italic;color:#a63d58}.lead{font-size:18px;line-height:1.55}.grid{display:grid;gap:14px;margin-top:22px}.choice{border:1px solid #d8b36a;background:#fff;border-radius:18px;padding:18px;text-align:left;cursor:pointer}.choice b{color:#a63d58;font-size:19px}.choice span{display:block;margin-top:6px;line-height:1.4}button{border:0;border-radius:999px;padding:13px 22px;background:#a63d58;color:white;font-size:16px;cursor:pointer;margin:10px}.prize{font-size:34px;color:#a63d58;font-weight:bold;margin:18px}.small{font-size:14px;color:#765761}
-</style></head><body><div class="wrap"><div class="card">
-<div>♡ ✦ ♡</div><h1>VALE DE SUEÑOS</h1><div class="name">Gimena Scarlett Valdivia Hernández</div>
-<p class="lead">Un regalo cada mes… y una sorpresa en cada elección. 💕</p><div id="screen"></div></div></div>
+body{
+margin:0;
+background:linear-gradient(135deg,#fffaf5,#f8e1e4);
+font-family:Georgia,serif;
+color:#4a2932
+}
+
+.wrap{
+max-width:760px;
+margin:auto;
+padding:22px
+}
+
+.card{
+background:#fffaf5ee;
+border:1px solid #d8b36a;
+border-radius:24px;
+padding:28px;
+box-shadow:0 15px 45px #7b405222;
+text-align:center
+}
+
+h1{
+font-size:38px;
+color:#b8862d;
+margin:4px 0
+}
+
+h2{
+color:#a63d58
+}
+
+.name{
+font-size:25px;
+font-style:italic;
+color:#a63d58
+}
+
+.lead{
+font-size:18px;
+line-height:1.55
+}
+
+.grid{
+display:grid;
+gap:14px;
+margin-top:22px
+}
+
+.choice{
+border:1px solid #d8b36a;
+background:#fff;
+border-radius:18px;
+padding:18px;
+text-align:left;
+cursor:pointer
+}
+
+.choice b{
+color:#a63d58;
+font-size:19px
+}
+
+.choice span{
+display:block;
+margin-top:6px;
+line-height:1.4
+}
+
+button{
+border:0;
+border-radius:999px;
+padding:13px 22px;
+background:#a63d58;
+color:white;
+font-size:16px;
+cursor:pointer;
+margin:10px
+}
+
+.prize{
+font-size:34px;
+color:#a63d58;
+font-weight:bold;
+margin:18px
+}
+
+.small{
+font-size:14px;
+color:#765761
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrap">
+<div class="card">
+
+<div>♡ ✦ ♡</div>
+
+<h1>VALE DE SUEÑOS</h1>
+
+<div class="name">
+Gimena Scarlett Valdivia Hernández
+</div>
+
+<p class="lead">
+Una sorpresa muy especial para celebrar tus XV años. 💕
+</p>
+
+<div id="screen"></div>
+
+</div>
+</div>
+
 <script>
+
+/* CELULARES */
+
 const C=[
-["iPhone 17 Pro Max","La elección de tus sueños. Pero… ya no podrás obtener la opción de dinero.","none"],
-["iPhone 16 Pro Max","Casi te quedas sin dinero.","3500"],
-["iPhone 15 Pro Max","Un gran celular… y todavía queda un poquito de dinero.","5000"],
-["iPhone 14 Pro Max","Celular mas dinero suficiente para ajustar 2 cambios de ropa.","7000"],
-["iPhone 13 Pro Max","Celular mas dinero para darte el gusto de comprar media tienda de ropa jejeje.","10000"]];
+[
+"iPhone 17 Pro Max",
+"La elección de tus sueños. Pero… ya no podrás obtener la opción de dinero.",
+"none"
+],
+[
+"iPhone 16 Pro Max",
+"Casi te quedas sin dinero.",
+"3500"
+],
+[
+"iPhone 15 Pro Max",
+"Un gran celular… y todavía queda un poquito de dinero.",
+"5000"
+],
+[
+"iPhone 14 Pro Max",
+"Celular más dinero suficiente para ajustar 2 cambios de ropa.",
+"7000"
+],
+[
+"iPhone 13 Pro Max",
+"Celular más dinero para darte el gusto de comprar media tienda de ropa jejeje.",
+"10000"
+]
+];
+
 const s=document.getElementById("screen");
-function celular(){s.innerHTML='<h2>📱 Elige tu celular</h2><p>Piensa bien, Cachetona… cada elección cambia la sorpresa.</p><div class="grid">'+C.map((x,i)=>`<div class="choice" onclick="elige(${i})"><b>${i+1}. ${x[0]}</b><span>${x[1]}</span></div>`).join("")+'</div>'}
-function elige(i){localStorage.setItem("gimenaChoice",i);s.innerHTML=`<h2>✨ ¡Elección guardada! ✨</h2><p>Gimena, elegiste:</p><div class="prize">${C[i][0]}</div><p>${C[i][1]}</p><button onclick="dinero()">Descubrir mi regalo de dinero</button>`}
-function dinero(){let i=localStorage.getItem("gimenaChoice");if(i===null){celular();return}i=+i;let x=C[i];s.innerHTML=x[2]==="none"?`<h2>💰 Dinero</h2><p>Elegiste el <b>${x[0]}</b>.</p><div class="prize">Este vale no es válido para dinero.</div><button onclick="viaje()">Ver opción de viaje</button>`:`<h2>💰 ¡Tu sorpresa!</h2><p>Por elegir el <b>${x[0]}</b>…</p><div class="prize">$${Number(x[2]).toLocaleString("es-MX")} MXN</div><p>Este es el dinero que corresponde a tu elección.</p><button onclick="viaje()">Ver opción de viaje</button>`}
-function viaje(){s.innerHTML='<h2>✈️ Viaje internacional</h2><p>Elige entre los destinos preparados por Mamá y Papá.</p><div class="grid"><div class="choice"><b> Estados Unidos</b><span>Una aventura inolvidable con tus tíos y primos.</span></div><div class="choice"><b> Europa</b><span>Otro lado del charco, algo diferente (tú papa tambien quiere ir pero no le digas).</span></div><div class="choice"><b> Playa</b><span>El en mar la vida es mas sabrosa.</span></div><div class="choice"><b> Sudamerica</b><span>Cultura, gastronomía y diversión.</span></div><div class="choice"><b> Lo pensaré?</b><span>No hay prisa todavía tienes tiempo.</span></div></div><p class="small">Destino y presupuesto final: acuerdo con Mamá y Papá.</p><button onclick="celular()">Volver</button>'}
+
+
+/* ELEGIR CELULAR */
+
+function celular(){
+
+s.innerHTML=
+'<h2>📱 Elige tu celular</h2>'+
+'<p>Piensa bien, Cachetona… cada elección cambia la sorpresa.</p>'+
+'<div class="grid">'+
+
+C.map((x,i)=>
+
+`<div class="choice" onclick="elige(${i})">
+
+<b>${i+1}. ${x[0]}</b>
+
+<span>${x[1]}</span>
+
+</div>`
+
+).join("")+
+
+'</div>';
+
+}
+
+
+/* CELULAR ELEGIDO */
+
+function elige(i){
+
+localStorage.setItem("gimenaChoice",i);
+
+s.innerHTML=
+
+`<h2>✨ ¡Elección guardada! ✨</h2>
+
+<p>Gimena, elegiste:</p>
+
+<div class="prize">
+${C[i][0]}
+</div>
+
+<p>${C[i][1]}</p>
+
+<button onclick="dinero()">
+Descubrir mi regalo de dinero
+</button>`;
+
+}
+
+
+/* DINERO */
+
+function dinero(){
+
+let i=localStorage.getItem("gimenaChoice");
+
+if(i===null){
 celular();
-</script></div></body></html>
+return;
+}
+
+i=+i;
+
+let x=C[i];
+
+if(x[2]==="none"){
+
+s.innerHTML=
+
+`<h2>💰 Dinero</h2>
+
+<p>
+Elegiste el <b>${x[0]}</b>.
+</p>
+
+<div class="prize">
+Este vale no es válido para dinero.
+</div>
+
+<button onclick="viaje()">
+Ver opción de viaje
+</button>`;
+
+}else{
+
+s.innerHTML=
+
+`<h2>💰 ¡Tu sorpresa!</h2>
+
+<p>
+Por elegir el <b>${x[0]}</b>…
+</p>
+
+<div class="prize">
+$${Number(x[2]).toLocaleString("es-MX")} MXN
+</div>
+
+<p>
+Este es el dinero que corresponde a tu elección.
+</p>
+
+<button onclick="viaje()">
+Ver opción de viaje
+</button>`;
+
+}
+
+}
+
+
+/* VIAJE */
+
+function viaje(){
+
+s.innerHTML=
+
+`<h2>✈️ Viaje internacional</h2>
+
+<p>
+Elige entre los destinos preparados por Mamá y Papá.
+</p>
+
+<div class="grid">
+
+<div class="choice" onclick="eligeViaje('Estados Unidos')">
+<b>🇺🇸 Estados Unidos</b>
+<span>
+Una aventura inolvidable con tus tíos y primos.
+</span>
+</div>
+
+<div class="choice" onclick="eligeViaje('Europa')">
+<b>🇪🇺 Europa</b>
+<span>
+Otro lado del charco, algo diferente
+(tú papá también quiere ir pero no le digas).
+</span>
+</div>
+
+<div class="choice" onclick="eligeViaje('Playa')">
+<b>🏖️ Playa</b>
+<span>
+En el mar la vida es más sabrosa.
+</span>
+</div>
+
+<div class="choice" onclick="eligeViaje('Sudamérica')">
+<b>🌎 Sudamérica</b>
+<span>
+Cultura, gastronomía y diversión.
+</span>
+</div>
+
+<div class="choice" onclick="eligeViaje('Lo pensaré')">
+<b>🤔 Lo pensaré</b>
+<span>
+No hay prisa, todavía tienes tiempo.
+</span>
+</div>
+
+</div>
+
+<p class="small">
+Destino y presupuesto final: de acuerdo con Mamá y Papá.
+</p>`;
+
+}
+
+
+/* VIAJE ELEGIDO */
+
+function eligeViaje(destino){
+
+localStorage.setItem("gimenaViaje",destino);
+
+finalizar();
+
+}
+
+
+/* RESUMEN FINAL */
+
+function finalizar(){
+
+let i=localStorage.getItem("gimenaChoice");
+let viajeElegido=localStorage.getItem("gimenaViaje");
+
+if(i===null || viajeElegido===null){
+
+celular();
+return;
+
+}
+
+i=+i;
+
+let celularElegido=C[i][0];
+
+let dineroElegido=
+C[i][2]==="none"
+? "No aplica"
+: "$"+Number(C[i][2]).toLocaleString("es-MX")+" MXN";
+
+
+/* ENVIAR NOTIFICACIÓN */
+
+enviarNotificacion(
+celularElegido,
+dineroElegido,
+viajeElegido
+);
+
+
+/* MOSTRAR RESUMEN */
+
+s.innerHTML=
+
+`<h2>🎉 ¡Tu sueño está elegido! 🎉</h2>
+
+<p>
+Gimena, esta es tu elección:
+</p>
+
+<div class="choice">
+
+<b>📱 Celular</b>
+
+<span>
+${celularElegido}
+</span>
+
+</div>
+
+<div class="choice">
+
+<b>💰 Dinero</b>
+
+<span>
+${dineroElegido}
+</span>
+
+</div>
+
+<div class="choice">
+
+<b>✈️ Viaje</b>
+
+<span>
+${viajeElegido}
+</span>
+
+</div>
+
+<p style="margin-top:25px;line-height:1.6">
+
+Hija, disfruta mucho este regalo y esta etapa tan bonita de tu vida.
+
+<br><br>
+
+Nunca dejes de soñar, de luchar por lo que quieres
+y de creer siempre en ti.
+
+<br><br>
+
+Con todo nuestro amor,
+
+<br><br>
+
+<b>Mamá y Papá ❤️</b>
+
+</p>
+
+<button onclick="terminar()">
+TERMINAR
+</button>`;
+
+}
+
+
+/* FORMSPREE */
+
+function enviarNotificacion(celular, dinero, viaje){
+
+const FORM_ENDPOINT="https://formspree.io/f/moeqlqjq";
+
+const datos=new FormData();
+
+datos.append(
+"subject",
+"🎀 Gimena eligió su Vale de Sueños"
+);
+
+datos.append(
+"celular",
+celular
+);
+
+datos.append(
+"dinero",
+dinero
+);
+
+datos.append(
+"viaje",
+viaje
+);
+
+datos.append(
+"mensaje",
+"Gimena Scarlett Valdivia Hernández ha terminado su elección de XV años."
+);
+
+fetch(
+FORM_ENDPOINT,
+{
+method:"POST",
+body:datos,
+headers:{
+"Accept":"application/json"
+}
+}
+);
+
+}
+
+
+/* TERMINAR */
+
+function terminar(){
+
+s.innerHTML=
+
+`<h2>💕 Gracias por elegir tu sueño 💕</h2>
+
+<p style="line-height:1.7">
+
+Tu elección ha quedado guardada.
+
+<br><br>
+
+Ahora solo queda disfrutar y esperar
+ese momento tan especial.
+
+<br><br>
+
+<b>
+¡Felices XV años, Gimena! 👑✨
+</b>
+
+<br><br>
+
+Con todo nuestro amor,
+
+<br>
+
+<b>
+Mamá y Papá ❤️
+</b>
+
+</p>`;
+
+}
+
+
+/* INICIAR */
+
+celular();
+
+</script>
+
+</body>
+</html>
